@@ -3,6 +3,7 @@
 #include <map>
 #include <fstream>
 #include <sstream>
+#include <vector>
 
 class HuffmanTree {
 
