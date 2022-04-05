@@ -1,9 +1,9 @@
-#include <iostream>
 #include "HuffmanTree.h"
 
 bool checkExtension(std::string s,std::string ext) {
     return (s.substr(s.find_last_of(".") + 1) == ext);
 }
+
 
 int main(int argc, char* argv[]) {
     if (argc < 2 ) {
