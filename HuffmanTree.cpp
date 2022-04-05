@@ -115,8 +115,10 @@ void HuffmanTree::compress() {
 	}
 
 	if (i != 0) {
-		wr <<= 8 - i;
+		char unused = 8 - i;
+		wr <<= unused;
 		fDest.write(&wr, 1);
+		fDest.write(&unused, 1);
 	}
 
 	fSource.close();
@@ -136,23 +138,30 @@ void HuffmanTree::decompress() {
 	temp << fSource.rdbuf();
 	std::string as = temp.str();
 	as = as.substr(1 + 5 * minHeap.size());
+	char unusedBits=as.back();
+	as.pop_back();
+	char lastChar = as.back();
+	as.pop_back();
 
-	std::string fin;
 	for (char a : as) {
 		for (int i = 7; i >= 0; i--) {
 			if ((a >> i) & 1) { tmpNode = tmpNode->r; }
 			else { tmpNode = tmpNode->l; }
-			if (tmpNode == nullptr) {
-				fSource.close();
-				fDest.close();
-				return;
-			}
 			if (tmpNode->c != '\0') {
 				fDest.put(tmpNode->c);
 				tmpNode = start;
 			}
 		}
 	}
+	for (int i = 7; i >= unusedBits; i--) {
+		if ((lastChar >> i) & 1) { tmpNode = tmpNode->r; }
+		else { tmpNode = tmpNode->l; }
+		if (tmpNode->c != '\0') {
+			fDest.put(tmpNode->c);
+			tmpNode = start;
+		}
+	}
+
 	fSource.close();
 	fDest.close();
 }

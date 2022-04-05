@@ -10,7 +10,7 @@ class HuffmanTree {
 private:
 	struct node{
 		char c='\0';
-		int freq=0;
+		unsigned int freq=0;
 
 		node* l = nullptr;
 		node* r = nullptr;
