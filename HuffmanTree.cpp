@@ -1,5 +1,4 @@
 #include "HuffmanTree.h"
-#include <iostream>
 
 HuffmanTree::HuffmanTree(std::string f1, std::string f2) {
 	pathSource = f1;
