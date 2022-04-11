@@ -17,7 +17,10 @@ private:
 		node* l = nullptr;
 		node* r = nullptr;
 
-		bool operator<(const node &mag) const { return (this->freq < mag.freq); }
+		bool operator<(const node &mag) const { 
+			if (this->freq == mag.freq) return (this->c < mag.c);
+			return (this->freq < mag.freq);
+		}
 	};
 
 	node* start = nullptr;
