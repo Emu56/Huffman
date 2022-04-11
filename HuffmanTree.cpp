@@ -112,13 +112,15 @@ void HuffmanTree::compress() {
 		}
 		fSource.get(c);
 	}
-
+	
+	char unused;
+	if(i==0) unused = 0;
+	else unused = 8-i;
 	if (i != 0) {
-		char unused = 8 - i;
 		wr <<= unused;
 		fDest.write(&wr, 1);
-		fDest.write(&unused, 1);
 	}
+	fDest.write(&unused, 1);
 
 	fSource.close();
 	fDest.close();
