@@ -28,11 +28,11 @@ private:
 
 	std::string pathSource, pathDest;
 	std::fstream fSource, fDest;
-	std::map<char, std::string> codes;
+	std::map<char, std::vector<bool>> codes;
 
 	void makeMinHeap(bool comp);
 	void makeTree(std::vector<node> temp);
-	void code(node* r, std::string s);
+	void code(node* r, std::vector<bool> v);
 
 public:
 	HuffmanTree(std::string f1, std::string f2);

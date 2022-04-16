@@ -64,20 +64,23 @@ void HuffmanTree::makeTree(std::vector<node> temp) {
 	start = new node(temp[0]);
 }
 
-void HuffmanTree::code(node* r, std::string s) {
+void HuffmanTree::code(node* r, std::vector<bool> v) {
 	if (r->l == nullptr || r->r == nullptr) {
-		codes[r->c] = s;
+		codes[r->c] = v;
 		return;
 	}
 
-	code(r->l, s + '0');
-	code(r->r, s + '1');
+	std::vector<bool> vL = v,vR = v;
+	vL.push_back(false);
+	vR.push_back(true);
+	code(r->l,vL);
+	code(r->r,vR);
 }
 
 void HuffmanTree::compress() {
 	makeMinHeap(true);
 	makeTree(minHeap);
-	code(start, "");
+	code(start,std::vector<bool>());
 
 	char wr = minHeap.size();
 
@@ -98,11 +101,11 @@ void HuffmanTree::compress() {
 	short i = 0;
 	wr = '\0';
 	while (!fSource.eof()) {
-		std::string temp = codes[c];
+		std::vector<bool> temp = codes[c];
 
-		for (char z : temp) {
+		for (auto z : temp) {
 			wr <<= 1;
-			wr |= z - '0';
+			wr |= z;
 			i++;
 			if (i == 8) {
 				fDest.write(&wr, 1);
